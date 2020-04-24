@@ -23,7 +23,7 @@ jobs:
             python3 -m pytest
           name: Test
 
-  build_push_image_docker:
+  build_push_image:
     description: Build and push the image to GCR
     machine: true
     steps:
@@ -60,9 +60,9 @@ workflows:
   build_update_deploy:
     jobs:
       - build_and_test
-      - build_push_image_docker:
+      - build_push_image:
           requires:
             - build_and_test
       - deploy:
           requires:
-            - build_push_image_docker
+            - build_push_image
