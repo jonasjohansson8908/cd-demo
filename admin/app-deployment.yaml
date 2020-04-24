@@ -1,25 +1,26 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: circle-ci-cluster
+  name: cd-demo-cluster
   labels:
     app: simple-backend
 spec:
   selector:
     matchLabels:
-      app: ci-deploy
+      app: cd-demo-deploy
       tier: backend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: ci-deploy
+        app: cd-demo-deploy
         tier: backend
     spec:
       containers:
         - image: gcr.io/circleci-demo-2020-04-20/circleci-gke:v1
-          name: dominic-backend
+          name: website
           ports:
             - containerPort: 3000
-              name: ci-deploy
+              name: cd-demo-deploy
+
