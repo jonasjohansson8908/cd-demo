@@ -18,8 +18,8 @@ spec:
         tier: backend
     spec:
       containers:
-        - image: gcr.io/cd-demo-275213/circleci-gke:$CIRCLE_SHA1 # rename
-          name: website
+        - image: gcr.io/cd-demo-275213/circleci-gke:v1 # rename
+          name: dominic-backend
           ports:
             - containerPort: 3000
               name: cd-demo-deploy
