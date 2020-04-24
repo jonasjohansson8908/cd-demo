@@ -1,22 +1,21 @@
-# Set the base image to use for subsequent instructions
+# Download python base image if needed
 FROM python:3.9.0a5-alpine3.10
 
-# Add metadata to an image 
+# Label the image
 LABEL app="python_server"
 
-# Set the working directory for any subsequent ADD, COPY, CMD, ENTRYPOINT, 
-# or RUN instructions that follow it in the Dockerfile
+# The WORKDIR instruction sets the working directory for any RUN, CMD, 
+# ENTRYPOINT, COPY and ADD instructions
 WORKDIR /usr/src/app/
 
-
-# Copy files or folders from source to the dest path in the image's filesystem.
+# Copy the entire project
 COPY . /usr/src/app/
 
 # install dependencies
 RUN pip3 install -r requirements.txt
 
-# Define the network ports that this container will listen on at runtime.
+# Set the port where the container listens for connections
 EXPOSE 3000
 
-# Configure the container to be run as an executable.
+# Run the software contained in the image
 CMD ["python", "src/server_python.py"]
