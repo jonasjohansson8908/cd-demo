@@ -51,7 +51,7 @@ jobs:
       - gcp-gke/rollout-image:
           deployment: cd-demo-cluster # rename
           cluster: cd-demo-cluster # rename
-          container: dominic-backend 
+          container: website 
           # edit the path and name of the image to match your container registry
           image: gcr.io/cd-demo-275213/cd-demo-gke # rename
           tag: $CIRCLE_SHA1
