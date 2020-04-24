@@ -1,3 +1,11 @@
+"""
+A very simplistic http-server to run index.html.
+Note that http.server is not recommended for production.
+
+This server is only meant to show a basic webpage which is updated
+through continous deployment.
+"""
+
 import http.server
 import socketserver
 import os
@@ -5,6 +13,7 @@ import os
 def server():
     PORT = 3000
 
+    # change working directory into '/web'
     web_dir = os.path.join(os.path.dirname(__file__), '../web')
     os.chdir(web_dir)
 
