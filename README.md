@@ -8,7 +8,7 @@ The demo show how every push to the github master branch will be processed by Ci
 # Getting Started
 This section briefly explains what you need inorder to run the program.
 
-## Prerequisites
+## Prerequisites, following the demo
 The demo requires that you have the following accounts and software.
 
 * A terminal with Docker installed.
@@ -17,10 +17,22 @@ The demo requires that you have the following accounts and software.
 * A Github account.
 * A CircleCI account.
 
-## Running the code, without deployment
+## Prerequisites, running the code locally
+The demo requires that you have the following accounts and software.
+
+* (Using docker) A terminal with Docker installed.
+* (Using Python) >= Python 3.7
+
+
+## Running the code locally 
 If you want to run the code just to test it, do the following steps.
+
+With docker:
 * Start a terminal with Docker installed
 * Enter `docker build -t server`
 * Enter `docker run -p 3000:3000 server`
 * In a web browser enter `localhost:3000`
+
+With python:
+* Start terminal
 
