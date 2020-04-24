@@ -1,26 +1,25 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: cd-demo-cluster # rename
+  name: cd-demo-cluster
   labels:
     app: simple-backend
 spec:
   selector:
     matchLabels:
-      app: cd-demo-deploy # rename
+      app: cd-demo-deploy
       tier: backend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: cd-demo-deploy # rename
+        app: cd-demo-deploy
         tier: backend
     spec:
       containers:
-        - image: gcr.io/cd-demo-275213/cd-demo-gke:v1 # rename
+        - image: gcr.io/cd-demo-275213/circleci-gke:$CIRCLE_SHA1 # rename
           name: website
           ports:
             - containerPort: 3000
-              name: cd-demo-deploy # rename
-
+              name: cd-demo-deploy
