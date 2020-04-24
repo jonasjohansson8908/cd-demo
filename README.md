@@ -17,14 +17,14 @@ The demo requires that you have the following accounts and software.
 * A Github account.
 * A CircleCI account.
 
-## Prerequisites, running the code locally
-The demo requires that you have the following accounts and software.
+# Running the code locally
+
+## Prerequisites
 
 * (Using docker) A terminal with Docker installed.
 * (Using Python) `Python^3.7`
 
-## Running the code locally 
-If you want to run the code just to test it, do the following steps.
+## Instructions
 
 ### Docker:
 * Start a terminal with Docker installed
