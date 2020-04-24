@@ -9,5 +9,5 @@ The demo requires that you have the following accounts and software.
 * A Github account.
 * A CircleCI account.
 
-The demo show how every push to the github repository will be processed by CircleCI and deployed to Google cloud platform.
+The demo show how every push to the github master branch will be processed by CircleCI and deployed to Google cloud platform.
 ![](readme_img/website.png) 
