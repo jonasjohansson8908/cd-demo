@@ -1,5 +1,5 @@
 """
-Tests for the functions of utils/progress.py
+Tests for the functions of src/server_python.py
 """
 
 from src.server_python import server

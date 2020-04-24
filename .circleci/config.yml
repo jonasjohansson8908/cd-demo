@@ -2,14 +2,17 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
-  gcp-gke: circleci/gcp-gke@1.0.3 # An orb for Google Kubernetes Engine (GKE)
-  gcp-gcr: circleci/gcp-gcr@0.6.1 # An orb for Google Container Registry (GCR)
+  # An orb for Google Kubernetes Engine (GKE)
+  gcp-gke: circleci/gcp-gke@1.0.3
+  # An orb for Google Container Registry (GCR) 
+  gcp-gcr: circleci/gcp-gcr@0.6.1
 
 jobs:
-  build:
-    docker: # run the steps with Docker
+  build_and_test:
+    # run the steps with Docker
+    docker:
       - image: circleci/python:3.9.0a4-buster
-    description: Update dependencies
+    description: Update dependencies and run tests
     steps:
       - checkout
       - python/load-cache
@@ -20,12 +23,12 @@ jobs:
             python3 -m pytest
           name: Test
 
-  build_push_image_docker:
-    description: Build and push the image to GCD
+  build_push_image:
+    description: Build and push the image to GCR
     machine: true
     steps:
       - checkout
-      # Configure Docker to use gcloud as a credential helper
+      # configure Docker to use gcloud as a credential helper
       - gcp-gcr/gcr-auth
       - gcp-gcr/build-image:
           image: circleci-gke
@@ -35,30 +38,31 @@ jobs:
           tag: $CIRCLE_SHA1
     
   deploy:
-    description: Deploy application to Google Kubernetes Engine
+    description: Deploy image from GCR to GKE
     machine: true
     steps:
-      # Install `gcloud` and `kubectl` if not already installed.
+      # install gcloud and kubectl
       - gcp-gke/install
-      # Initialize the gcloud CLI.
+      # initialize the gcloud CLI
       - gcp-gke/update-kubeconfig-with-credentials:
           perform-login: true
           cluster: circle-ci-cluster
-      # Update cluster with new Docker image.
+      # update cluster with new Docker image
       - gcp-gke/rollout-image:
           deployment: circle-ci-cluster
           cluster: circle-ci-cluster
           container: dominic-backend
+          # edit the path and name of the image to match your container registry
           image: gcr.io/circleci-demo-2020-04-20/circleci-gke
           tag: $CIRCLE_SHA1
 
 workflows:
   build_update_deploy:
     jobs:
-      - build
-      - build_push_image_docker:
+      - build_and_test
+      - build_push_image:
           requires:
-            - build
+            - build_and_test
       - deploy:
           requires:
-            - build_push_image_docker
+            - build_push_image
