@@ -1,0 +1,64 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+  gcp-gke: circleci/gcp-gke@1.0.3 # An orb for Google Kubernetes Engine (GKE)
+  gcp-gcr: circleci/gcp-gcr@0.6.1 # An orb for Google Container Registry (GCR)
+
+jobs:
+  build:
+    docker: # run the steps with Docker
+      - image: circleci/python:3.9.0a4-buster
+    description: Update dependencies
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          command: |
+            python3 -m pytest
+          name: Test
+
+  build_push_image_docker:
+    description: Build and push the image to GCD
+    machine: true
+    steps:
+      - checkout
+      # Configure Docker to use gcloud as a credential helper
+      - gcp-gcr/gcr-auth
+      - gcp-gcr/build-image:
+          image: circleci-gke
+          tag: $CIRCLE_SHA1
+      - gcp-gcr/push-image:
+          image: circleci-gke
+          tag: $CIRCLE_SHA1
+    
+  deploy:
+    description: Deploy application to Google Kubernetes Engine
+    machine: true
+    steps:
+      # Install `gcloud` and `kubectl` if not already installed.
+      - gcp-gke/install
+      # Initialize the gcloud CLI.
+      - gcp-gke/update-kubeconfig-with-credentials:
+          perform-login: true
+          cluster: circle-ci-cluster
+      # Update cluster with new Docker image.
+      - gcp-gke/rollout-image:
+          deployment: circle-ci-cluster
+          cluster: circle-ci-cluster
+          container: dominic-backend
+          image: gcr.io/circleci-demo-2020-04-20/circleci-gke
+          tag: $CIRCLE_SHA1
+
+workflows:
+  build_update_deploy:
+    jobs:
+      - build
+      - build_push_image_docker:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - build_push_image_docker
