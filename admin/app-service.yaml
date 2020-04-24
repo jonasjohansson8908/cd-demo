@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cd-demo-service
+  name: cd-demo-service # rename
   labels:
     app: cd-demo
 spec:
   ports:
     - port: 3000
   selector:
-    app: cd-demo-deploy
+    app: cd-demo-deploy # rename
     tier: backend
   type: LoadBalancer

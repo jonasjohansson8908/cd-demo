@@ -31,10 +31,10 @@ jobs:
       # configure Docker to use gcloud as a credential helper
       - gcp-gcr/gcr-auth
       - gcp-gcr/build-image:
-          image: circleci-gke
+          image: cd-demo-gke # rename
           tag: $CIRCLE_SHA1
       - gcp-gcr/push-image:
-          image: circleci-gke
+          image: cd-demo-gke # rename
           tag: $CIRCLE_SHA1
     
   deploy:
@@ -46,14 +46,14 @@ jobs:
       # initialize the gcloud CLI
       - gcp-gke/update-kubeconfig-with-credentials:
           perform-login: true
-          cluster: circle-ci-cluster
+          cluster: cd-demo-cluster # rename
       # update cluster with new Docker image
       - gcp-gke/rollout-image:
-          deployment: circle-ci-cluster
-          cluster: circle-ci-cluster
-          container: dominic-backend
+          deployment: cd-demo-cluster # rename
+          cluster: cd-demo-cluster # rename
+          container: website 
           # edit the path and name of the image to match your container registry
-          image: gcr.io/circleci-demo-2020-04-20/circleci-gke
+          image: gcr.io/cd-demo-275213/cd-demo-gke # rename
           tag: $CIRCLE_SHA1
 
 workflows:
