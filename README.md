@@ -1,13 +1,13 @@
 # Continous deployment demo
 
 ### Continuous deployment pipeline with CircleCI, Kubernetes and Google Cloud Platform
-This repository provides the necessary code to be able to replicate the demo that can be found HERE. The demo is about how you 
+This repository provides the necessary code to be able to replicate the demo that can be found [HERE](https://youtu.be/oEZfV3XWw7w). The demo is about how you 
 combine CircleCI, Google cloud platform, Docker, and Kubernetes in order to achieve continuous deployment. 
 
 The demo shows how every push to the github master branch will be processed by CircleCI and deployed to Google cloud platform.
 ![](readme_img/website.png) 
 
-Youtube: https://youtu.be/oEZfV3XWw7w
+**Youtube-link:** https://youtu.be/oEZfV3XWw7w
 
 # Getting Started
 This section briefly explains what you need to run the program.
