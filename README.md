@@ -7,6 +7,8 @@ combine CircleCI, Google cloud platform, Docker, and Kubernetes in order to achi
 The demo shows how every push to the github master branch will be processed by CircleCI and deployed to Google cloud platform.
 ![](readme_img/website.png) 
 
+Youtube: https://youtu.be/oEZfV3XWw7w
+
 # Getting Started
 This section briefly explains what you need to run the program.
 
